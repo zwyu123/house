@@ -9,4 +9,6 @@ import java.util.List;
 public interface UserMapper {
 
     public List<User> selectUsers();
+
+    public int insert(User account);
 }
