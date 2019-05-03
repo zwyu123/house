@@ -19,7 +19,7 @@ public class FileService {
     @Value("${file.path}")
     private String filePath;
 
-    public List<String> getImgPath(List<MultipartFile> files){
+    public List<String> getImgPaths(List<MultipartFile> files){
         List<String> paths = Lists.newArrayList();
         files.forEach(file ->{
             File localFile = null;
@@ -28,7 +28,7 @@ public class FileService {
                     localFile = saveToLocal(file,filePath);
                     String path = StringUtils.substringAfterLast(localFile.getAbsolutePath(),filePath);
                     paths.add(path);
-                }catch (Exception e){
+                }catch (IOException e){
                     throw new IllegalArgumentException(e);
                 }
             }
@@ -43,6 +43,6 @@ public class FileService {
             newFile.createNewFile();
         }
         Files.write(file.getBytes(), newFile);
-        return null;
+        return newFile;
     }
 }

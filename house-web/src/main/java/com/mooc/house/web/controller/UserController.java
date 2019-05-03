@@ -4,13 +4,14 @@ import com.mooc.house.biz.service.UserService;
 import com.mooc.house.common.model.User;
 import com.mooc.house.common.result.ResultMsg;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RestController
+@Controller
 public class UserController {
 
     @Autowired
@@ -26,11 +27,12 @@ public class UserController {
     @RequestMapping("accounts/register")
     public String accountsRegister(User account, ModelMap modelMap){
         if (account == null || account.getName() == null){
-            return "user/accounts/register";
+            return "/user/accounts/register";
         }
         //用户验证
         ResultMsg resultMsg = UserHelper.validate(account);
         if (resultMsg.isSuccess() && userService.addAccount(account)){
+            modelMap.put("email",account.getEmail());
             return "/user/accounts/registerSubmit";
         }else {
             return "redirect:/accounts/register?" + resultMsg.asUrlParams();

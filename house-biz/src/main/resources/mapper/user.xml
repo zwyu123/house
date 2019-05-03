@@ -28,4 +28,9 @@
                         #{enable}
                         )
     </insert>
+
+    <delete id="delete">
+        delete from user
+        where email=#{email}
+    </delete>
 </mapper>
