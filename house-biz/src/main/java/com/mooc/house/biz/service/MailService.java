@@ -42,6 +42,7 @@ public class MailService {
     public void sendMail(String title, String url, String email){
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(from);
+        message.setSubject(title);
         message.setTo(email);
         message.setText(url);
         mailSender.send(message);
